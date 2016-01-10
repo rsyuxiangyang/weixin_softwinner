@@ -1,4 +1,4 @@
-package weixin.route;
+package common.spark_route;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

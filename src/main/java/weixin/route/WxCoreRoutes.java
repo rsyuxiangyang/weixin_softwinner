@@ -1,8 +1,7 @@
 package weixin.route;
 
 import app.AbstractEventProcessor;
-import common.jsf.MessageUtil;
-import common.utils.JsonTransformer;
+import common.spark_route.RouteRegister;
 import common.utils.PropertyManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +14,15 @@ import weixin.util.CommonUtil;
 import weixin.util.LngAndLatUtil;
 import weixin.util.SignUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 /**
- * Created by Administrator on 2015/10/30.
+ * Created by XIANGYANG on 2016-1-7.
  */
 @Component
-public class CoreRoutes implements RouteRegister {
-    private static final Logger logger = LoggerFactory.getLogger(CoreRoutes.class);
+public class WxCoreRoutes implements RouteRegister {
+    private static final Logger logger = LoggerFactory.getLogger(WxCoreRoutes.class);
     private static final String GET_POST_CORE_HANDLE = "/wx/coreRoute";
     private static final String GET_WEBPAGE_OAUTH = "/wx/webPageOAuth";
     private static final String GET_QRCODE = "/wx/getQRcode/:token/:deptCode/:deptSceneId";
@@ -116,7 +112,6 @@ public class CoreRoutes implements RouteRegister {
         get(GET_WEBPAGE_OAUTH, (request, response) -> {
             // 用户同意授权后，能获取到code
             String code = request.raw().getParameter("code");
-
             logger.info("*********code:"+code);
             // 用户同意授权
             if (!"".equals(code)&&code!=null) {

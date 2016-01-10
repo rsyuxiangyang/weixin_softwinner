@@ -69,6 +69,9 @@ public class DeptAction {
         String starDate=getDateAfter(new Date(), 0, "yyyy-MM-dd");
         String endDate=getDateAfter(new Date(), 1, "yyyy-MM-dd");
         gdDeptShowList=deptService.qryDeptSubscribeInfo(starDate,endDate);
+        for(GdDeptShow gdDeptShow:gdDeptShowList){
+            gdDeptShow.setDayAddUp((Integer.parseInt(gdDeptShow.getDayNew())-Integer.parseInt(gdDeptShow.getDayCancle()))+"");
+        }
         return gdDeptShowList;
     }
 

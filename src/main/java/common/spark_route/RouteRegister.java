@@ -1,4 +1,4 @@
-package weixin.route;
+package common.spark_route;
 
 /**
  * 路由注册机

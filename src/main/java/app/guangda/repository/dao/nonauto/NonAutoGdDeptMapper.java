@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public interface NonAutoGdDeptMapper {
-    @Select("select max(dept_scene_id) from gd_dept")
+    @Select("select max(dept_scene_id+0) from gd_dept")
     String selectMaxSceneId();
 
     @Select(" SELECT  pkid,  " +
@@ -22,7 +22,7 @@ public interface NonAutoGdDeptMapper {
             "   (select count(*) from gd_subscribe_log where dept_code =CONCAT(\"qrscene_\",t.dept_scene_id) and  subscribe_type='1'  and create_time between #{strStartDate} and #{strEndDate}) dayNew ,  " +
             "   (select count(*) from gd_subscribe_log where dept_code =CONCAT(\"qrscene_\",t.dept_scene_id) and subscribe_type='0' and create_time between #{strStartDate} and #{strEndDate}) dayCancle,  " +
             "   (select count(*) from gd_subscribe_user where dept_code =CONCAT(\"qrscene_\",t.dept_scene_id) and subscribe_flag='1') total  " +
-            " FROM `gd_dept`  t;")
+            " FROM `gd_dept`  t order by dept_code,dept_type")
     List<GdDeptShow> qryDeptSubscribeInfo(@Param("strStartDate") String strStartDate,@Param("strEndDate") String strEndDate);
 
 }

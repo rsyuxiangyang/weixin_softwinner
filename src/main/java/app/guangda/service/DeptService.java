@@ -45,7 +45,8 @@ public class DeptService {
 
     public void insertRecord(GdDept gdDeptPara){
         String maxSeneId=selectMaxSceneId();
-        gdDeptPara.setDeptSceneId(maxSeneId);
+        String currentSceneId=Integer.parseInt(maxSeneId)+1+"";
+        gdDeptPara.setDeptSceneId(currentSceneId);
         gdDeptMapper.insert(gdDeptPara);
     }
 

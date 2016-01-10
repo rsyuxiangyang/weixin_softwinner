@@ -7,7 +7,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:c="http://java.sun.com/jsp/jstl/core">
     
-    <div id="layout-menubar" class="Unselectable fontRegular">
+    <div id="layout-menubar" class="Unselectable fontRegular" >
         <div class="layout-menubarinner-box" id="buttonArea">
             <a href="#" id="layout-menubar-resize" class="BordRad3" title="Menu Resize"><i class="icon-th-list-2"></i></a>
             <a href="#" id="layout-menubar-resize2" class="BordRad3" title="Open Menu"><i class="icon-menu"></i></a>
@@ -20,7 +20,7 @@
 
         <ps:menu id="sm_leftmenu">
             <p:menuitem id="sm_dashboard" value="主页面" icon="icon-home-outline" outcome="/UI/guangda/dashboard.xhtml" containerStyleClass="layout-menubar-active"/>
-            <p:submenu id="commom_function" label="常用功能" icon="icon-graduation-cap" >
+            <p:submenu id="commom_function" label="系统功能" icon="icon-graduation-cap" >
                 <p:menuitem id="dept_forms" value="经营机构管理" icon="icon-doc-text-1" outcome="/UI/guangda/dept/deptMng.xhtml"/>
                 <p:menuitem id="qrcode_forms" value="经营机构二维码管理" icon="icon-doc-text-1" outcome="/UI/guangda/qrcode/qrcodeMng.xhtml"/>
                 <p:menuitem id="fs_forms" value="粉丝统计" icon="icon-doc-text-1" outcome="/UI/guangda/dept/subscribeQry.xhtml"/>
