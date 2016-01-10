@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation=" http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <!-- 配置数据库连接池 -->
+    <context:property-placeholder location="classpath:prjcfg.properties"/>
+
+    <!-- 配置数据库连接池 -->
+    <!--mysql-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${platform.db.ConnectionManager.sDBDriver}"></property>
+        <property name="url" value="${platform.db.ConnectionManager.sConnStr}"></property>
+        <property name="username" value="${platform.db.ConnectionManager.user}"></property>
+        <property name="password" value="${platform.db.ConnectionManager.passwd}"></property>
+        <property name="maxActive" value="15"></property>
+        <property name="maxIdle" value="5"></property>
+    </bean>
+
+    <!-- transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- enable component scanning (beware that this does not enable mapper scanning!) -->
+    <context:component-scan base-package="app.guangda,weixin"/>
+
+    <!-- enable autowire -->
+    <context:annotation-config/>
+
+    <!--<tx:jta-transaction-manager />-->
+
+    <!-- enable transaction demarcation with annotations -->
+    <tx:annotation-driven/>
+
+    <!-- define the SqlSessionFactory, notice that configLocation is not needed when you use MapperFactoryBean -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:app/guangda/repository/mapper/**/*.xml</value>
+            </list>
+        </property>
+    </bean>
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="app.guangda.repository.dao"/>
+    </bean>
+    <bean id="springUtils" class="common.utils.SpringUtils" />
+</beans>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="D:\WorkSpace\Other\weixin\pf-mobile\lib\mysql-jdbc.jar"/>
+
+    <context id="AllInfo" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/weixin?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="app.guangda.repository.model" targetProject="main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="app.guangda.repository.mapper" targetProject="main/java/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="app.guangda.repository.dao" targetProject="main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--业务类例子 -->
+        <table tableName="gd_dept">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <!--<property name="useActualColumnNames" value="true" />-->
+            <generatedKey column="pkid" sqlStatement="select uuid()" identity="false"/>
+        </table>
+        <table tableName="gd_subscribe_log">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <!--<property name="useActualColumnNames" value="true" />-->
+            <generatedKey column="pkid" sqlStatement="select uuid()" identity="false"/>
+        </table>
+        <table tableName="gd_subscribe_user">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <!--<property name="useActualColumnNames" value="true" />-->
+            <generatedKey column="pkid" sqlStatement="select uuid()" identity="false"/>
+        </table>
+        <table tableName="gd_ptoper">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <!--<property name="useActualColumnNames" value="true" />-->
+            <generatedKey column="pkid" sqlStatement="select uuid()" identity="false"/>
+        </table>
+    </context>
+</generatorConfiguration>

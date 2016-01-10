@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>EPSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    <h:outputScript name="js/login.js" library="sentinel-layout" />
+    <h:outputStylesheet name="css/font-icon-layout.css" library="sentinel-layout" />
+    <h:outputStylesheet name="css/sentinel-layout.css" library="sentinel-layout" />
+    <h:outputStylesheet name="css/core-layout.css" library="sentinel-layout" />
+</h:head>
+
+<h:body class="fontRegular login-back white-back" >
+
+    <div class="Container80 MaxWid500 Fnone MarAuto TexAlCenter PaddingTopPercent10">
+        <a href="" id="login-logo">
+            <h:graphicImage name="images/LOGO_top_3.svg" styleClass="Fleft" library="sentinel-layout"/>
+            <span class="Fs30 FontTitilliumSemiBoldItalic Fleft"><span class="softblue">OfficalAccounts</span>
+                </span>
+        </a>
+        <div class="EmptyBox10"></div>
+    </div>
+
+    <!-- LOGIN BOX COVER START -->
+    <div class="Container80 MaxWid500 white-back Fnone MarAuto BordRad10" id="login-box">
+        <h:form id="form">
+            <p:messages id="msgs" showDetail="false" life="3000"/>
+
+        <div class="Container100">
+            <div class="Container50 TexAlCenter Animated05 BoxSizeBorder TabBtn left TabBtnActiveLeft" role="1">
+                <div class="Container80 Fnone MarAuto FontBold" style="font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;">
+                    <i class="icon-lock"></i>登录系统</div>
+            </div>
+            <div class="Container50 TexAlCenter Animated05 BoxSizeBorder TabBtn right" role="2">
+                <div class="Container80 Fnone MarAuto FontBold" style="font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;">
+                    <i class="icon-key-1"></i>权限申请</div>
+            </div>
+
+            <div class="Container90 Fnone MarAuto TexAlCenter TabContent" id="TAB1">
+                <div class="EmptyBox50"></div>
+                <p:inputText id="username" value="#{loginManagerAction.operId}"  placeholder="用户名" styleClass="Container80 Fnone MarAuto Fs18"
+                             style="font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;"/>
+                <div class="EmptyBox10"></div>
+                <p:password id="password" value="#{loginManagerAction.operPasswd}" placeholder="密码" styleClass="Container80 Fnone MarAuto Fs18"
+                            feedback="false" style="font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;"/>
+                <div class="EmptyBox20"></div>
+                <div class="Container85 Fnone MarAuto softgray">
+                    <p:selectBooleanCheckbox value="#{loginManagerAction.agree}" styleClass="Fleft" itemLabel="同意公众号后台系统相关条款和政策"/>
+                </div>
+                <div class="EmptyBox30"></div>
+                <p:commandButton value="登录系统" styleClass="Fs24" style="font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif !important;"
+                                 action="#{loginManagerAction.onLogin}"
+                                 update="msgs"/>
+                <div class="EmptyBox30"></div>
+            </div>
+
+            <div class="Container90 Fnone MarAuto DispNone TexAlCenter TabContent" id="TAB2">
+                <div class="EmptyBox50"></div>
+                <p:inputText value="#{loginManagerAction.mailbox}" placeholder="邮箱地址" styleClass="Container80 Fnone MarAuto Fs18"/>
+                <div class="EmptyBox20"></div>
+                <p:button  value="发送权限申请" styleClass="Fs16"></p:button>
+                <div class="EmptyBox50"></div>
+            </div>
+        </div>
+        </h:form>
+    </div>
+    <!-- LOGIN BOX COVER END -->
+
+</h:body>
+
+</html>

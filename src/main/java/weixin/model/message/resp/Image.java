@@ -1,0 +1,18 @@
+package weixin.model.message.resp;
+
+/**
+ * Created by XIANGYANG on 2015-8-3.
+ * Í¼Æ¬model
+ */
+public class Image {
+	// Ã½ÌåÎÄ¼þid
+	private String MediaId;
+
+	public String getMediaId() {
+		return MediaId;
+	}
+
+	public void setMediaId(String mediaId) {
+		MediaId = mediaId;
+	}
+}

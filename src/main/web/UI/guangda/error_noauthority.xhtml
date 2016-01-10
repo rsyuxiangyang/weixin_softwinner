@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/guangda_ui.xhtml">
+    <ui:define name="head">
+        <h:outputStylesheet name="css/font-icon-layout.css" library="sentinel-layout" />
+        <h:outputStylesheet name="css/sentinel-layout.css" library="sentinel-layout" />
+        <h:outputStylesheet name="css/core-layout.css" library="sentinel-layout" />
+    </ui:define>
+    <ui:define name="content">
+        <h:body class="fontRegular white-back">
+            <div class="PosRelative MarAuto OvHidden TexAlCenter Wid100 Hei100" >
+                <div class="EmptyBox100"></div>
+                <h:graphicImage name="images/error-face.svg" library="sentinel-layout" style="width: 100px;"/>
+                <div></div>
+                <span>您没有操作权限!</span><br/>
+                <div class="EmptyBox20"></div>
+                <p:button value="返回首页" styleClass="Fs24" href="/dashboard.xhtml"></p:button>
+            </div>
+        </h:body>
+    </ui:define>
+</ui:composition>

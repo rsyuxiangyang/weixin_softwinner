@@ -1,0 +1,56 @@
+<ui:composition
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <div id="layout-header" class="Unselectable fontRegular">
+        <h:form id="topbarform">
+
+            <a href="#{request.contextPath}/UI/guangda/dashboard.xhtml" id="layout-logo">
+                <h:graphicImage name="images/LOGO_top_3.svg" style="height: 25px" styleClass="Fleft"
+                                library="sentinel-layout"/>
+            </a>
+            <ul id="sm-topmenu" class="layout-header-widgets white Fs14">
+                <li class="Fleft BordRadHalf TexAlCenter"><i class="icon-user-male"></i>
+                    <ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+                        <li class="Animated05"><a href="#" class="white Unselectable"><i
+                                class="icon-stopwatch-1"></i>工作计划</a></li>
+                        <li class="Animated05"><a href="#{request.contextPath}/UI/guangda/login.xhtml" class="white Unselectable"><i
+                                class="icon-users-2"></i>修改密码</a></li>
+                        <li class="Animated05"><a href="#" class="white Unselectable"><i
+                                class="icon-sliders"></i>用户参数</a></li>
+                    </ul>
+                </li>
+                <li class="Fleft BordRadHalf TexAlCenter"><i class="icon-bell"></i><span
+                        class="alertBubble BordRad10 Fs9">4</span>
+                </li>
+                <li class="Fleft BordRadHalf TexAlCenter"><i class="icon-wrench-1"></i>
+                    <ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+                        <li class="Animated05"><a href="#" class="white Unselectable"><i
+                                class="icon-sun"></i>系统设置</a></li>
+                        <li class="Animated05"><a href="#" class="white Unselectable"><i
+                                class="icon-lifebuoy"></i>帮助文档</a></li>
+                    </ul>
+                </li>
+                <li class="Fleft BordRadHalf TexAlCenter"><i class="icon-power"></i>
+                    <ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+                        <li class="Animated05"><a href="#{request.contextPath}/UI/guangda/login.xhtml" class="white Unselectable"><i
+                                class="icon-ccw-1"></i>重新登录</a></li>
+                        <li class="Animated05"><a href="#{request.contextPath}/UI/guangda/login.xhtml" class="white Unselectable"><i
+                                class="icon-logout"></i>注销</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- NEVER REMOVE FOLLOWING 'UL' TAG ! BECAUSE THIS CONTAINS RESPONSIVE MODE HEADER MENU OPEN-CLOSE BUTTON -->
+            <ul id="sm-mobiletopmenu" class="layout-header-widgets white Fs14">
+                <li class="Fleft BordRadHalf TexAlCenter Animated05 DisplayOnResponsive"><i class="icon-th-1"></i></li>
+            </ul>
+            <!-- ****** -->
+        </h:form>
+    </div>
+
+</ui:composition>

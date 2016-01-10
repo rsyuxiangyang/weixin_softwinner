@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile">
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+<head>
+    <meta charset="utf-8"/>
+    <title>微信JS-SDK Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"/>
+    <link rel="stylesheet" href="http://demo.open.weixin.qq.com/jssdk/css/style.css?ts=1420774989"/>
+</head>
+<body ontouchstart="">
+<h:outputText value="当前位置："/>
+<input type="text" id="txId" value=""/>
+</body>
+<script src="js/jquery-1.6.js"> </script>
+<script src="js/jweixin-1.0.0.js"> </script>
+<script src="js/jssdk_control.js"> </script>
+<script>
+    $.ajax({
+        type: "get",
+        data: {sourceReqUrl:"http://yxyhsk.6655.la/weixin/index.xhtml"},
+        dataType: "json",
+        url: "http://yxyhsk.6655.la/weixin/jssdkSignServlet",
+        success: function (data) {
+            var jsonData = eval(data);
+            var timestamp=jsonData.timestamp;
+            var nonceStr=jsonData.nonceStr;
+            var signature=jsonData.signature;
+            wx.config({
+                debug: false,
+                appId: 'wxb67cf3f14d6861e4',
+                timestamp: timestamp,
+                nonceStr: nonceStr,
+                signature: signature,
+                jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+                ]
+            });
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    $.ajax({
+                        type: "get",
+                        data: {lng:longitude,lat:latitude},
+                        dataType: "json",
+                        url: "http://yxyhsk.6655.la/weixin/getAddressServlet",
+                        success: function (data) {
+                            alert(data);
+                            document.getElementById("txId").value=data;
+                        }
+                    })
+                }
+            });
+        }
+    });
+
+</script>
+</html>

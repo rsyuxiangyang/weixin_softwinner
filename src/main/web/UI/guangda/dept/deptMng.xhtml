@@ -1,0 +1,247 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/guangda_ui.xhtml">
+
+<ui:define name="head">
+    <script type="text/javascript">
+        function skinChart() {
+            this.cfg.shadow = false;
+            this.cfg.seriesColors = ['#dae8ef','#27aae1'];
+            this.cfg.grid = {
+                background: '#f3f5f7',
+                borderColor: '#e5ebf0',
+                gridLineColor: '#e5ebf0',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#9fadb5'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                markerOptions: {
+                    shadow: false
+                }
+            }
+        }
+
+        function skinPie() {
+            this.cfg.seriesColors = ['#dae8ef','#27aae1','#33ccff','#9fadb5'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#eaeaea',
+                gridLineColor: '#e5ebf0',
+                shadow: false,
+                borderWidth: 0
+            };
+            this.cfg.seriesDefaults.shadow = false;
+        }
+    </script>
+    <style type="text/css">
+        .jqplot-target, .jqplot-axis {
+            color: #9fadb5;
+        }
+    </style>
+</ui:define>
+
+<ui:define name="content">
+<!-- SECTION 1 -->
+
+<h:form id="form">
+<div style="margin:5px;">
+<p:growl id="msgs" showDetail="true"/>
+<p:focus for="id"/>
+<p:panel>
+    <h:panelGrid id="pdQry" columns="2" style="width: 100%">
+        <h:panelGrid columns="6">
+            <p:outputLabel value="机构类型：" for="deptTypeId"/>
+            <p:inputText id="deptTypeId" value="#{deptAction.gdDeptQry.deptType}"/>
+            <p:outputLabel value="客户编号：" for="id"/>
+            <p:inputText id="id" value="#{deptAction.gdDeptQry.deptCode}"/>
+            <p:outputLabel value="客户名称：" for="name"/>
+            <p:inputText id="name" value="#{deptAction.gdDeptQry.deptName}"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <p:commandButton id="qryBtn" value="查询"
+                             action="#{deptAction.onQueryAction}"
+                             update="pdt,msgs,pdQry">
+            </p:commandButton>
+            <p:commandButton id="resetBtn" value="重置"
+                             type="reset"
+                             update="pdQry,msgs">
+            </p:commandButton>
+            <p:ajaxStatus style="width:16px;height:16px;">
+                <f:facet name="start">
+                    <h:graphicImage value="/images/ajaxloading.gif"/>
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value=""/>
+                </f:facet>
+            </p:ajaxStatus>
+        </h:panelGrid>
+    </h:panelGrid>
+</p:panel>
+<p:commandButton id="addBtn"
+                 value="增加" icon="ui-icon-plus"
+                 action="#{deptAction.resetActionForAdd()}"
+                 update="pdt,msgs,pgViewForAdd"
+                 onclick="PF('wVDlgViewForAdd').show()"/>
+<p:dataTable id="pdt" style="width:100%;"
+             value="#{deptAction.gdDeptList}"
+             var="record"
+             rowKey="#{record.pkid}"
+             selectionMode="single"
+             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks}
+                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+             paginator="true"
+             paginatorPosition="bottom"
+             rows="10"
+             rowIndexVar="row"
+             rowsPerPageTemplate="200,100,50,40,30,20,10"
+             emptyMessage="数据记录为空..."
+             scrollable="true">
+    <p:column headerText="序号" style="width:50px">
+        <h:outputText value="#{row + 1}"/>
+    </p:column>
+    <p:column headerText="机构类型" style="width:100px;text-align:center">
+        <h:outputText value="#{record.deptType}"/>
+    </p:column>
+    <p:column headerText="机构代码" style="width:100px;text-align:center">
+        <h:outputText value="#{record.deptCode}"/>
+    </p:column>
+    <p:column headerText="机构名称" style="text-align:left">
+        <h:outputText value="#{record.deptName}"/>
+    </p:column>
+    <p:column headerText="地址" style="text-align:center">
+        <h:outputText value="#{record.deptAddress}"/>
+    </p:column>
+    <p:column headerText="联系电话" style="width:150px;text-align:center">
+        <h:outputText value="#{record.deptPhone}"/>
+    </p:column>
+    <p:column headerText="操作" style="width:80px;text-align: center;">
+        <p:commandButton  icon="ui-icon-pencil"
+                          style="height:18px;width:18px"
+                          action="#{deptAction.selectRecordAction('Upd',record)}"
+                          update="pdt,:form:pgViewForUpd,:form:msgs"
+                          onclick="PF('wVDlgViewForUpd').show()">
+        </p:commandButton>
+        <p:commandButton  icon="ui-icon-trash"
+                          style="height:18px;width:18px"
+                          action="#{deptAction.selectRecordAction('Del',record)}"
+                          update="pdt,:form:pgViewForDel,:form:msgs"
+                          onclick="PF('wVDlgViewForDel').show()">
+        </p:commandButton>
+    </p:column>
+</p:dataTable>
+<p:dialog id="dlgViewForAdd" header="增加机构信息" widgetVar="wVDlgViewForAdd"
+          resizable="false" modal="true"
+          showEffect="clip" hideEffect="fold">
+    <h:panelGrid id="pgViewForAdd">
+        <h:panelGrid columns="2">
+            <p:outputLabel value="机构类型：" for="typeIdForAdd"/>
+            <p:selectOneMenu id="typeIdForAdd" value="#{deptAction.gdDeptAdd.deptType}">
+                <f:selectItems value="#{deptAction.deptTypeList}"/>
+            </p:selectOneMenu>
+        </h:panelGrid>
+        <h:panelGrid columns="4">
+            <p:outputLabel value="机构代码：" for="idForAdd"/>
+            <p:inputText id="idForAdd" value="#{deptAction.gdDeptAdd.deptCode}"/>
+            <p:outputLabel value="机构名称：" for="nameForAdd"/>
+            <p:inputText id="nameForAdd" value="#{deptAction.gdDeptAdd.deptName}"/>
+            <p:outputLabel value="地    址：" for="mobilephoneForAdd"/>
+            <p:inputText id="mobilephoneForAdd" value="#{deptAction.gdDeptAdd.deptAddress}"/>
+            <p:outputLabel value="联系电话：" for="operphoneForAdd"/>
+            <p:inputText id="operphoneForAdd" value="#{deptAction.gdDeptAdd.deptPhone}"/>
+        </h:panelGrid>
+        <h:panelGrid id="pgOperBtnForAdd" columns="4">
+            <p:commandButton id="submitBtnForAdd"
+                             value="增加"
+                             action="#{deptAction.submitRecordAction}"
+                             update="pdt,msgs,pgViewForAdd">
+            </p:commandButton>
+            <p:commandButton id="resetBtnForAdd" value="重置"
+                             type="reset"
+                             update="pgViewForAdd">
+            </p:commandButton>
+        </h:panelGrid>
+    </h:panelGrid>
+</p:dialog>
+<p:dialog id="dlgViewForUpd" header="更新机构信息" widgetVar="wVDlgViewForUpd"
+          resizable="false" modal="true"
+          showEffect="clip" hideEffect="fold">
+    <h:panelGrid id="pgViewForUpd">
+        <h:panelGrid columns="2">
+            <p:outputLabel value="机构类型：" for="typeIdForUpd"/>
+            <p:inputText id="typeIdForUpd" value="#{deptAction.gdDeptUpd.deptType}"/>
+        </h:panelGrid>
+        <h:panelGrid columns="4">
+            <p:outputLabel value="机构代码：" for="idForUpd"/>
+            <p:inputText id="idForUpd" value="#{deptAction.gdDeptUpd.deptCode}"/>
+            <p:outputLabel value="机构名称：" for="nameForUpd"/>
+            <p:inputText id="nameForUpd" value="#{deptAction.gdDeptUpd.deptName}"/>
+            <p:outputLabel value="地址：" for="mobilephoneForUpd"/>
+            <p:inputText id="mobilephoneForUpd" value="#{deptAction.gdDeptUpd.deptAddress}"/>
+            <p:outputLabel value="联系电话：" for="operphoneForUpd"/>
+            <p:inputText id="operphoneForUpd" value="#{deptAction.gdDeptUpd.deptPhone}"/>
+        </h:panelGrid>
+        <h:panelGrid id="pgOperBtnForUpd" columns="4">
+            <p:commandButton id="submitBtnForUpd"
+                             value="更新"
+                             action="#{deptAction.submitRecordAction}"
+                             update="pdt,:form:pgViewForUpd,:form:msgs"
+                             oncomplete="wVDlgViewForUpd.hide()">
+            </p:commandButton>
+            <p:commandButton id="resetBtnForUpd" value="重置"
+                             type="reset"
+                             update="pgViewForUpd">
+            </p:commandButton>
+        </h:panelGrid>
+    </h:panelGrid>
+</p:dialog>
+<p:dialog id="dlgViewForDel" header="删除机构信息" widgetVar="wVDlgViewForDel"
+          resizable="false" modal="true"
+          showEffect="clip" hideEffect="fold">
+    <h:panelGrid id="pgViewForDel">
+        <h:panelGrid columns="2">
+            <p:outputLabel value="机构类型：" for="typeIdForDel"/>
+            <p:inputText id="typeIdForDel" value="#{deptAction.gdDeptDel.deptType}"
+                    readonly="true" style="background-color:gainsboro;"/>
+        </h:panelGrid>
+        <h:panelGrid columns="4">
+            <p:outputLabel value="机构代码：" for="idForDel"/>
+            <p:inputText id="idForDel" value="#{deptAction.gdDeptDel.deptCode}"
+                         readonly="true"
+                         style="background-color:gainsboro;"/>
+            <p:outputLabel value="机构名称：" for="nameForDel"/>
+            <p:inputText id="nameForDel" value="#{deptAction.gdDeptDel.deptName}"
+                         readonly="true"
+                         style="background-color:gainsboro;"/>
+            <p:outputLabel value="地址：" for="mobilephoneForDel"/>
+            <p:inputText id="mobilephoneForDel" value="#{deptAction.gdDeptDel.deptAddress}"
+                         readonly="true"
+                         style="background-color:gainsboro;"/>
+            <p:outputLabel value="联系电话：" for="operphoneForDel"/>
+            <p:inputText id="operphoneForDel" value="#{deptAction.gdDeptDel.deptPhone}"
+                         readonly="true"
+                         style="background-color:gainsboro;"/>
+
+        </h:panelGrid>
+        <h:panelGrid id="pgOperBtnForDel">
+            <p:commandButton id="submitBtnForDel"
+                             value="删除"
+                             action="#{deptAction.submitRecordAction}"
+                             update="pdt,:form:pgViewForDel,:form:msgs"
+                             oncomplete="wVDlgViewForDel.hide()">
+            </p:commandButton>
+        </h:panelGrid>
+    </h:panelGrid>
+</p:dialog>
+</div>
+</h:form>
+</ui:define>
+
+</ui:composition>
